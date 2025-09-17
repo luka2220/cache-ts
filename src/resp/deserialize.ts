@@ -7,6 +7,8 @@ enum Token {
 }
 
 // Unmarshall's the RESP message
+//
+// Throw's if the Token type is invalid or not supported
 export default function deserialize(data: string) {
   let counter = 0;
   while (counter <= data.length) {
@@ -17,7 +19,7 @@ export default function deserialize(data: string) {
       case Token.BulkString:
       case Token.Array:
       default:
-      // Do some error handling
+        throw new Error(`Invalid or unsupported RESP token: ${data[counter]}`);
     }
   }
 }
